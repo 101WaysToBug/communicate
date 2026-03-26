@@ -4,23 +4,20 @@ A Claude Code skill that transforms any content into polished communication form
 
 ## Installation
 
-### Clone and Install
+### Option 1: Global skill (available in all projects)
 
 ```bash
-# Clone the repository
-git clone https://github.com/101WaysToBug/communicate.git
-
-# Import the skill into Claude Code
-claude skill add /path/to/communicate
+git clone https://github.com/101WaysToBug/communicate.git ~/.claude/skills/communicate
 ```
 
-### Quick Install (without cloning)
+### Option 2: Project-level skill (available only in one project)
 
 ```bash
-claude skill add https://github.com/101WaysToBug/communicate
+cd your-project
+git clone https://github.com/101WaysToBug/communicate.git .claude/skills/communicate
 ```
 
-Or add it directly in your Claude Code settings under `skills`.
+Restart Claude Code after installing. The `/communicate` slash command will be available immediately.
 
 ## Usage
 
