@@ -40,7 +40,7 @@ You'll be prompted to choose a style:
 
 ## Examples
 
-See [examples/sample-output.md](examples/sample-output.md) for a full example showing all four styles generated from a single input.
+See [sample-output.md](./examples/sample-output.md) for a full example showing all four styles generated from a single input.
 
 ## Customization
 

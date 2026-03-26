@@ -1,57 +1,45 @@
 # Communication Style: Release Notes
 
 ## Purpose
-Clear, structured announcement of what changed in a release — aimed at users, stakeholders, or the broader team so they can quickly understand new capabilities, improvements, and breaking changes.
+Clear, structured announcement of what changed in a release — aimed at users, stakeholders, or the broader team so they can quickly understand new capabilities, improvements, and the motivation behind them.
 
 ## Format Rules
-- **Length:** As long as needed; one section per notable change (typically 200-500 words)
+- **Length:** As long as needed (typically 200-500 words)
 - **Tone:** Informative, neutral, slightly celebratory for big features
-- **Structure:**
-  - **Header:** Version number + date (e.g., `v1.2.0 — 2026-03-06`)
-  - **Summary:** 1-3 sentence overview of the release theme
-  - **Sections per change:** Use `## New:`, `## Improved:`, `## Fixed:`, `## Changed:`, `## Deprecated:`, `## Removed:` prefixes
-  - **Bullets:** Concise descriptions under each section — lead with *what* changed, then *why* it matters
-  - **Migration Notes:** If there are breaking changes or required actions, add a `## Migration Notes` section at the end
-- **Include:** Feature names, brief context on value, links to docs where helpful
+- **Structure — use these four sections:**
+  1. **What is the name of the feature?** — Clear, recognizable feature name as the heading
+  2. **What's changing and why?** — Describe the previous behavior or gap, then explain what's now different and the motivation behind the change
+  3. **Who is this for?** — Target audience: end users, admins, sales teams, specific segments, etc.
+  4. **How it works** — Step-by-step or bullet-point breakdown of the feature's behavior, toggles, settings, and key details
+- **Include:** Feature names, brief context on value, specific behavioral details
 - **Avoid:** Internal jargon, implementation details, commit-level granularity, overly technical language
 - **Focus:** What the user/stakeholder gains from the change
 
 ## Example
 
-**Input:** We added a new dashboard with real-time analytics, fixed a bug where CSV exports silently dropped rows over 10K, improved search speed by 3x, and deprecated the v1 webhook format (removal in 90 days).
+**Input:** We shipped contact owner-based routing — when enabled via an admin toggle, inbound messages and calls route back to the contact's owning agent before any automation kicks in. Owner and assignee stay in sync automatically.
 
 **Output:**
 
-# Release Notes — v2.4.0 (2026-03-06)
+## 1. Feature Name
+**Contact Owner-Based Routing (Operator Scoping)**
 
-## Summary
+## 2. What's Changing and Why?
+Previously, automations and round-robin assignment could override an agent's ownership of a contact — meaning a salesperson's established lead might get routed to someone else when they message back.
 
-This release adds a real-time analytics dashboard, dramatically improves search performance, and fixes a data-loss bug in CSV exports.
+Now, when enabled, **contact owner-first routing** ensures that inbound messages and calls are always routed back to the contact's owning agent before any automation or default assignment kicks in. This protects sales territory, maintains relationship continuity, and prevents automations from overriding explicit owner/assignee decisions.
 
----
+## 3. Who Is This For?
+- **Sales teams** who rely on dedicated contact ownership and territory protection
+- **Admins** who want control over routing priority via a simple ON/OFF toggle
+- **Any team using automations or round-robin** that needs to preserve agent-contact relationships
 
-## New: Real-Time Analytics Dashboard
-
-A new dashboard gives you live visibility into key metrics — active users, feature adoption, and conversion rates — without waiting for overnight batch jobs. Available under **Settings → Analytics**.
-
-- Updates every 30 seconds
-- Filterable by date range, segment, and region
-- Exportable as PNG or PDF
-
-## Improved: Search Performance (3x Faster)
-
-Search queries across projects and documents now return results up to 3x faster thanks to an updated indexing strategy. No action required — the improvement applies automatically.
-
-## Fixed: CSV Export Dropping Rows
-
-Exports with more than 10,000 rows were silently truncating data. This has been fixed — all rows are now included regardless of export size.
-
-## Deprecated: v1 Webhook Format
-
-The legacy v1 webhook payload format is now deprecated and will be removed in 90 days. Please migrate to the v2 format before June 2026. See the webhook migration guide for details.
-
----
-
-## Migration Notes
-
-- **Webhooks:** If you are still consuming v1 webhook payloads, switch to v2 before the removal date. The v2 format includes structured metadata and event typing.
+## 4. How It Works
+- A new admin toggle — **Contact owner-based routing** (ON/OFF) — controls the behavior
+- When **ON**, routing follows this priority:
+  1. **Active conversation with a human assignee** — messages/calls continue routing to that assignee
+  2. **Closed conversation, reopened by inbound message/call** — routes to the existing assignee (and syncs contact owner), or falls back to the contact owner
+  3. **No owner or assignee** — falls through to automation rules, then default assignment
+- **Owner and assignee stay in sync** — changing one automatically updates the other
+- Automations and round-robin **will not override** the contact owner/assignee when the toggle is enabled
+- When **OFF**, routing works exactly as before

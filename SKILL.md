@@ -1,6 +1,6 @@
 ---
 name: communicate
-description: Transform any content into polished communication formats — Executive Email, Slack Update, Notion Document, or Release Notes. Use when the user asks to "communicate this", "draft a Slack update", "write an executive email", "create release notes", or needs to format content for stakeholders.
+description: Transform any content into polished communication formats — Executive Email, Slack Update, Notion Document, Release Notes, or Product Updates GTM. Use when the user asks to "communicate this", "draft a Slack update", "write an executive email", "create release notes", "draft a GTM update", or needs to format content for stakeholders.
 argument-hint: "[content or topic to communicate]"
 version: 1.0.0
 ---
@@ -16,8 +16,9 @@ Ask the user which communication style(s) they want. Present these options:
 1. **Executive Email** — Strategic update for leadership with business impact (3 paragraphs)
 2. **Slack Update** — Quick team update, easy to scan (2-4 lines)
 3. **Notion Document** — Comprehensive async reference with full context (300-600 words)
-4. **Release Notes** — Structured announcement of what changed in a release (200-500 words)
-5. **All of the above** — Generate all four styles in a single output
+4. **Release Notes** — Structured announcement covering: feature name, what's changing and why, who it's for, and how it works (200-500 words)
+5. **Product Updates GTM** — Go-to-market update with value prop, target audience, key messaging, rollout plan, and supporting assets needed (300-600 words)
+6. **All of the above** — Generate all five styles in a single output
 
 If the user provided `$ARGUMENTS`, use that as the content to communicate. If no arguments are provided, ask the user what content they want to communicate.
 
@@ -29,6 +30,7 @@ Read the matching style reference(s) from the references directory and follow th
 - [Slack Update style](references/style-slack-update.md)
 - [Notion Document style](references/style-notion-doc.md)
 - [Release Notes style](references/style-release-notes.md)
+- [Product Updates GTM style](references/style-product-updates-gtm.md)
 
 ## Style Summaries
 
@@ -56,15 +58,22 @@ Read the matching style reference(s) from the references directory and follow th
 ### Release Notes
 - **Length:** 200-500 words
 - **Tone:** Informative, neutral, slightly celebratory for big features
-- **Structure:** Version + date → Summary → Sections per change (New/Improved/Fixed/Changed/Deprecated/Removed) → Migration Notes if needed
-- **Include:** Feature names, value context, links to docs
+- **Structure:** Feature name → What's changing and why → Who is this for → How it works
+- **Include:** Feature names, previous behavior/gap, motivation, audience, behavioral details
 - **Avoid:** Internal jargon, implementation details, commit-level granularity
+
+### Product Updates GTM
+- **Length:** 300-600 words
+- **Tone:** Clear, customer-centric, enabling for sales/marketing/CS
+- **Structure:** Feature name → Value proposition → Target audience → Key messaging (3-4 bullets) → How it works → Rollout plan → Supporting assets needed
+- **Include:** Customer-facing language, segment targeting, messaging pillars, asset checklist
+- **Avoid:** Engineering details, internal acronyms, vague timelines, feature-only descriptions without value framing
 
 ## Guidelines
 
 1. **Match the format exactly** — Follow the structure and length constraints for each style
 2. **Adapt tone per style** — Executive emails are strategic; Slack is casual; Notion is thorough; Release notes are user-facing
-3. **When generating all styles** — Output them sequentially, separated by a horizontal rule (`---`), with a header for each style
+3. **When generating all styles** — Output them sequentially, separated by a horizontal rule (`---`), with a header for each style (all five formats)
 4. **Ground in the content** — Use real numbers, names, and context from the input. Never fabricate data.
 5. **Keep the user's intent** — Don't add information that wasn't in the original content
 
